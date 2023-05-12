@@ -1,6 +1,7 @@
 
-import axios from "axios";
 import React, { useState } from "react";
+import { toast , ToastContainer} from "react-toastify";
+import { createBook } from "sevices/books";
 
 const CreateBlog=()=>{
 const [title,setTitle]=useState('');
@@ -39,13 +40,15 @@ const handleSubmit=async(event)=>{
         newBook.append('publisherDate',publishedDate);
         newBook.append('content',description);
 
-        const res=await axios.post('http://localhost:8080/book',newBook);
-        console.log(res)
-
+      createBook(newBook);
+      toast('book created')
     } catch (error) {
-        console.log(error)
+       toast(error)
+       
     }
     setDescription('');
+    setTitle('')
+    setPublisher('')
     setImage('');
     setDescription('');
     setIsbn('');
@@ -55,6 +58,7 @@ const handleSubmit=async(event)=>{
 
     return(
         <form onSubmit={handleSubmit} className="form">
+            <ToastContainer/>
             <h2>CreateBook</h2>
             <label htmlFor="title" />
             <input type="text" name="title" value={title} onChange={handletitleChange} placeholder="Title" required/>

@@ -32,7 +32,7 @@ const createBook=async(req,res,next)=>{
   try {
     console.log(req.file)
     const {title,description,publisher,publishedDate,isbn}=req.body;
-    const image=req.file && req.file.path;
+    const image=req.file && req.file.originalname;
     if(!title){
         throw createError(404,"Title of book is missing");
     }

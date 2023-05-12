@@ -19,6 +19,7 @@ const port = dev.app.serverPort;
 app.use(morgan("dev"));
 app.use(cors({
   origin:"*",
+  httpOnly:true,
   credentials:true
 }));
 app.use(bodyParser.json());
@@ -30,9 +31,9 @@ app.get('/', (req, res) => {
   res.send('test');
 });
 
-app.use('/user',userRouter);
+app.use('/api/user',userRouter);
 
-app.use('/book',bookRouter);
+app.use('/api/book',bookRouter);
 
 
 app.listen(port, () => {

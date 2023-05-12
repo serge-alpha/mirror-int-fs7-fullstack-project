@@ -96,7 +96,7 @@ const verifyUser=(req,res,next)=>{
 const loginUser=async(req,res)=>{
     try {
         const {email,password}=req.body; 
-        if(!email||!password){
+        if(!email|!password){
             throw createError(404,"Email or password not found");
         }
         const user= await User.findOne({email:email});
@@ -116,7 +116,7 @@ const loginUser=async(req,res)=>{
     if(req.cookies[`${user._id}`]){
         req.cookies[`${user._id}`]='';
     }
-        res.cookie(String(user._id),token,{
+       req.headers.cookie= res.cookie(String(user._id),token,{
             path:'/',
             expires:new Date(Date.now() + 1000 *60*29),
             httpOnly:true,
@@ -132,9 +132,11 @@ const loginUser=async(req,res)=>{
                 name:user.name,
             }
          })
-         console.log(req.session)
+         //req.headers.cookie=res.
+        console.log(req.headers)
     } catch (error) {
-        res.status(500).json({message:"something went wrong"})
+        res.json({error})
+       // res.status(500).json({message:"something went wrong"})
     }
 }
 
@@ -251,9 +253,14 @@ const deleteUser=async(req,res)=>{
 
 const logoutUser=(req,res)=>{
     try {
-        const id=req.headers.cookie.split('=')[0];
-        res.clearCookie(id)
-        res.status(200).json({message:"Logout succesful"})        
+        if(req.headers.cookie){
+             const id=req.headers.cookie.split('=')[0];
+            res.clearCookie(id)
+            res.status(200).json({message:"Logout succesful"}) 
+        }else{
+            res.status(404).json({message:"You are logged out . Please log in"})
+        }
+              
 
     } catch (error) {
         res.status(500).json({message:"Something went wrong"})  
