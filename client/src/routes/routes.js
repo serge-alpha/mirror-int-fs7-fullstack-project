@@ -7,6 +7,7 @@ import Home from "pages/Home";
 import Nav from "layout/Navbar";
 import SignUp from "layout/signup";
 import Book from "pages/Book";
+import Profile from "pages/Profile";
 
 const Index=()=>{
     return(
@@ -17,6 +18,7 @@ const Index=()=>{
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/books" element={<Books/>} />
                 <Route path="/book" element={<Book/>}/>
+                <Route path="/profile" element={<Profile/>}/>
                 <Route path="/login" element={<Login/>} />
                 <Route path="/create-book" element={<CreateBook/>} />
             </Routes>

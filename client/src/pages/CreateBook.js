@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import { toast , ToastContainer} from "react-toastify";
+import { toast } from "react-toastify";
 import { createBook } from "sevices/books";
 
 const CreateBlog=()=>{
@@ -57,8 +57,8 @@ const handleSubmit=async(event)=>{
 }
 
     return(
-        <form onSubmit={handleSubmit} className="form">
-            <ToastContainer/>
+        <form onSubmit={handleSubmit} className="login_form">
+        
             <h2>CreateBook</h2>
             <label htmlFor="title" />
             <input type="text" name="title" value={title} onChange={handletitleChange} placeholder="Title" required/>

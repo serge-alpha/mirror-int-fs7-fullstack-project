@@ -3,6 +3,7 @@ import axios from "axios"
 export const getAllBooks=async()=>{
     try {
         const response=await axios.get('http://localhost:8080/api/book');
+        console.log({response:response})
         return( response.data.data)
     } catch (error) {
         throw new Error(

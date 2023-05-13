@@ -96,8 +96,11 @@ const verifyUser=(req,res,next)=>{
 const loginUser=async(req,res)=>{
     try {
         const {email,password}=req.body; 
-        if(!email|!password){
-            throw createError(404,"Email or password not found");
+        if(!email){
+            throw createError(404,"Please input your email adress");
+        }
+        if(!password){
+            throw createError(404,"Please input your password");
         }
         const user= await User.findOne({email:email});
         
@@ -163,11 +166,24 @@ const updateUser=async(req,res,next)=>{
 }
 const getAllUsers=async(req,res,next)=>{
     try {
-        const users=await User.findOne({})
+        const users=await User.find({})
         if(!users){
           throw createError(404,' No User found')
         }
         succesMessage(res,200,'All Users',users)  
+      } catch (error) {
+          next(error)
+      }
+}
+
+const getSingleUser=async(req,res,next)=>{
+    try {
+        const id=req.params.id
+        const user=await User.findById(id)
+        if(!user){
+          throw createError(404,' No User found')
+        }
+        succesMessage(res,200,'Single User',user)  
       } catch (error) {
           next(error)
       }
@@ -266,4 +282,4 @@ const logoutUser=(req,res)=>{
         res.status(500).json({message:"Something went wrong"})  
     }
 }
-module.exports={createUser,forgetPassword,resetPassword,verifyUser,updateUser,getAllUsers,loginUser,logoutUser,deleteUser}
+module.exports={createUser,forgetPassword,resetPassword,verifyUser,updateUser,getAllUsers,loginUser,logoutUser,deleteUser,getSingleUser}

@@ -1,12 +1,12 @@
 
-const Book = require("../model/books")
+const {Book,data} = require("../model/books")
 const createError=require('http-errors')
 const { succesMessage } = require("../helper/Response")
 const slugify=require('slugify')
 
 const getAllBooks=async(req,res,next)=>{
     try {
-      const books=await Book.find()
+      const books=await Book.find({}).populate()
       if(!books){
         throw createError(404,'books is empty')
       }
@@ -34,19 +34,19 @@ const createBook=async(req,res,next)=>{
     const {title,description,publisher,publishedDate,isbn}=req.body;
     const image=req.file && req.file.originalname;
     if(!title){
-        throw createError(404,"Title of book is missing");
+        throw createError(400,"Title of book is missing");
     }
     if(!description){
-      throw createError(404,"Description of book is missing");
+      throw createError(400,"Description of book is missing");
    }
    if(!publisher){
-    throw createError(404,"Publisher of book is missing");
+    throw createError(400,"Publisher of book is missing");
     }
     if(!publishedDate){
-      throw createError(404,"Date of book publish is missing");
+      throw createError(400,"Date of book publish is missing");
    }
    if(!isbn){
-    throw createError(404,"ISBN of book is missing");
+    throw createError(400,"ISBN of book is missing");
  }
   
     
@@ -114,4 +114,14 @@ const deleteBook=async(req,res)=>{
       res.status(500).json({message:"something went wrong"})
   }
 }
-module.exports={createBook,updateBook,deleteBook,getAllBooks,getSingleBook};
+
+const resetBook=async()=>{
+  try {
+    await Book.deleteMany();
+   const dummydata= new Book(data);
+   res.send('BOOK RESETED')
+  } catch (error) {
+    createError(400,'BOOK NOT RESETTED')
+  }
+}
+module.exports={createBook,updateBook,deleteBook,getAllBooks,getSingleBook,resetBook};
