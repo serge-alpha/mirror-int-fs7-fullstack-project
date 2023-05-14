@@ -109,10 +109,13 @@ form>input,textarea{
   border: 1px solid #2C3333;
   border-radius: 5px;
 }
-.library{
+.library_content{
   display: grid;
   grid-template-columns: repeat(4,1fr);
   justify-content: space-around;
+}
+.library{
+  margin: auto;
 }
 .card{
   background-color:antiquewhite;

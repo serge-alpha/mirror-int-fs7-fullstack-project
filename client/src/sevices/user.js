@@ -2,7 +2,12 @@ import axios from "axios"
 
 export const loginUser=async(data)=>{
     try {
-        const response=await axios.post('http://localhost:8080/api/user',data);
+        // console.log(JSON.stringify(data))
+        // const response=await axios.post('http://localhost:8080/api/user',JSON.stringify(data));
+        const response = await fetch('http://localhost:8080/api/user', {
+            method: 'POST',
+            body: JSON.stringify(data)
+         });
         return( response)
     } catch (error) {
         throw new Error(

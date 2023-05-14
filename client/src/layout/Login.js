@@ -20,15 +20,15 @@ const handlePasswordChange=(event)=>{
 const handleSubmit=async(event)=>{
     event.preventDefault();
     try {
-         const User= new FormData();
-        User.append('password',password);
-        User.append('email',email);
+        //  const User= new FormData();
+        // User.append('password',password);
+        // User.append('email',email);
+        const User={
+            password,email
+        }
+        console.log(User)
         const res=await loginUser(User);
         console.log(res)
-       
-
-        // const res=await axios.post('http://localhost:8080/api/user/login',User);
-        // console.log(res)
         navigate('/books')
     } catch (error) {
         console.log(error)

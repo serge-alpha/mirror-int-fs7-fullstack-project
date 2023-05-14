@@ -21,9 +21,9 @@ const Books=()=>{
     },[]);
    console.log(books)
     return(
-        <div className="home">
-            {status?<h1>Book Library</h1>:<h1>Loading</h1>}
-            <div className="library">
+        <div className="library">
+            {status?<h1>Book Library</h1>:<h1>Loading.....</h1>}
+            <div className="library_content">
             {status?(books.map((book)=>{
                 return (< Book book={book} key={book._id}/>)
                 })):''}

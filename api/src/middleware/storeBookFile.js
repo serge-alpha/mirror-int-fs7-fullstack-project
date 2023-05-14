@@ -4,7 +4,7 @@ const fileSize=1024*1024*2;
 
 const storageBook= multer.diskStorage({
     destination:(req,file,cd)=>{
-        cd(null, path.join( __dirname ,"../public/blog/images"));
+        cd(null, path.join( __dirname ,"../public/book/image"));
     },
     filename:(req,file,cd)=>{
         cd(null,Date.now()+"-"+file.originalname);

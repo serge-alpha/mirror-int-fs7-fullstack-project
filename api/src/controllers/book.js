@@ -1,5 +1,5 @@
 
-const {Book,data} = require("../model/books")
+const {Book,data, Publisher} = require("../model/books")
 const createError=require('http-errors')
 const { succesMessage } = require("../helper/Response")
 const slugify=require('slugify')
@@ -30,7 +30,6 @@ const getSingleBook=async(req,res,next)=>{
 
 const createBook=async(req,res,next)=>{
   try {
-    console.log(req.file)
     const {title,description,publisher,publishedDate,isbn}=req.body;
     const image=req.file && req.file.originalname;
     if(!title){
@@ -124,4 +123,30 @@ const resetBook=async()=>{
     createError(400,'BOOK NOT RESETTED')
   }
 }
-module.exports={createBook,updateBook,deleteBook,getAllBooks,getSingleBook,resetBook};
+
+const createPublisher=async(req,res,next)=>{
+  try {
+    const {publisher}=req.body;
+   if(!publisher){
+    throw createError(400,"Publisher of book is missing");
+    }
+    
+    const exist= await Publisher.findOne({name:publisher});
+    console.log(exist)
+    if(exist){
+      throw createError(404,'This Publisher already exist.')
+    }
+    
+    const newPublisher= new Publisher({
+        name:publisher,
+        });  
+   
+       const pub=await newPublisher.save();
+       await succesMessage(res,200,'Publisher Created',pub);
+
+} catch (error) {
+    next(error)
+}
+}
+
+module.exports={createBook,updateBook,deleteBook,getAllBooks,getSingleBook,resetBook,createPublisher};

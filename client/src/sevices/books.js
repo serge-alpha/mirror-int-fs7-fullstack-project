@@ -14,7 +14,13 @@ export const getAllBooks=async()=>{
 
 export const createBook=async(newBook)=>{
     try {
-        const response=await axios.post('http://localhost:8080/api/book',newBook);
+        console.log(newBook)
+         const response=await axios.post('http://localhost:8080/api/book',JSON.stringify(newBook));
+        // const response = await fetch('http://localhost:8080/api/book', {
+        //     method: 'POST',
+        //     body: JSON.stringify({ info: 'my info message', id: 1})
+        //  });
+         
         console.log( response.data)
     } catch (error) {
         throw new Error(

@@ -15,15 +15,15 @@ const bookRouter = require('./routes/books');
 
 const app = express();
 const port = dev.app.serverPort;
-
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
 app.use(morgan("dev"));
 app.use(cors({
   origin:"*",
   httpOnly:true,
   credentials:true
 }));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended:true}));
+
 app.use(cookieParser());
 
 
