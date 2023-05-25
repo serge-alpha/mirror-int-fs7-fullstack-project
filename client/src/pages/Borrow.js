@@ -1,14 +1,14 @@
 import React from "react";
 
-const Profile=(handleState)=>{
+const Borrow=(handleState)=>{
    
     return(
          <div className="home">  
-              Profile
+              Books
          </div>
         
         
     )
 }
 
-export default Profile;
+export default Borrow;

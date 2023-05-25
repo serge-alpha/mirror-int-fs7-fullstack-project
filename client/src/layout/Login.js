@@ -1,14 +1,19 @@
 
-import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginUser } from "sevices/user";
+import { LoginUser} from "sevices/user";
+import {ToastContainer, toast} from 'react-toastify';
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "store/features/userSlice";
 
 
 const Login=()=>{
 const [email,setEmail]=useState('');
 const [password,setPassword]=useState('');
+
 let navigate=useNavigate();
+const dispatch=useDispatch();
+
 
 const handleEmailChange=(event)=>{
     setEmail(event.target.value)
@@ -20,17 +25,18 @@ const handlePasswordChange=(event)=>{
 const handleSubmit=async(event)=>{
     event.preventDefault();
     try {
-        //  const User= new FormData();
-        // User.append('password',password);
-        // User.append('email',email);
-        const User={
-            password,email
-        }
-        console.log(User)
-        const res=await loginUser(User);
-        console.log(res)
+         const User= new FormData();
+        User.append('password',password);
+        User.append('email',email);
+        
+       const result= await LoginUser(User);
+
+       toast(result.message)
+      dispatch(login(result.user))
+
         navigate('/books')
     } catch (error) {
+        alert()
         console.log(error)
     }
     setPassword('');
@@ -39,6 +45,7 @@ const handleSubmit=async(event)=>{
 
     return(
             <form onSubmit={handleSubmit} className="login_form">
+                <ToastContainer/>
                 <h2>Login</h2>
                 <label htmlFor="email"/>
                 <input type="email" name="email" value={email} onChange={handleEmailChange} placeholder="Email" required/>      

@@ -16,7 +16,7 @@ const bookRouter = require('./routes/books');
 const app = express();
 const port = dev.app.serverPort;
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(express.urlencoded({extended:true}));
 app.use(morgan("dev"));
 app.use(cors({
   origin:"*",

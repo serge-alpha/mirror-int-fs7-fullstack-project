@@ -1,21 +1,39 @@
 import axios from "axios"
 
-export const loginUser=async(data)=>{
+export const signUpUser=async(data)=>{
     try {
-        // console.log(JSON.stringify(data))
-        // const response=await axios.post('http://localhost:8080/api/user',JSON.stringify(data));
-        const response = await fetch('http://localhost:8080/api/user', {
-            method: 'POST',
-            body: JSON.stringify(data)
-         });
+        console.log(JSON.stringify(data))
+        const response=await axios.post('http://localhost:8080/api/user',JSON.stringify(data));
         return( response)
     } catch (error) {
         throw new Error(
-            `Error fetching all products: ${error}`
+            `Error signin up:${error}`
         )
     }
 }
 
+export const LoginUser=async(data)=>{
+    try {
+       //console.log(JSON.stringify(data))
+        const response=await axios.post('http://localhost:8080/api/user/login',data);
+        return( response.data)
+    } catch (error) {
+        throw new Error(
+            `Error Loginin: ${error}`
+        )
+    }
+}
+
+export const getAllUser=async(data)=>{
+    try {
+        const response=await axios.get(`http://localhost:8080/api/user`);
+        return( response)
+    } catch (error) {
+        throw new Error(
+            `Error fetching users: ${error}`
+        )
+    }
+}
 export const getsingleUser=async(data)=>{
     try {
         const response=await axios.get(`http://localhost:8080/api/user/${data}`);

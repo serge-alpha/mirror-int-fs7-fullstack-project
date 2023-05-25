@@ -40,7 +40,8 @@ const handleSubmit=async(event)=>{
         newBook.append('publisherDate',publishedDate);
         newBook.append('content',description);
 
-      createBook(newBook);
+      const bookInfo=await createBook(newBook);
+      console.log(bookInfo)
       toast('book created')
     } catch (error) {
        toast(error)
@@ -63,13 +64,16 @@ const handleSubmit=async(event)=>{
             <label htmlFor="title" />
             <input type="text" name="title" value={title} onChange={handletitleChange} placeholder="Title" required/>
             <label htmlFor="publisher" />
+            <select>
+                <option>hallo1</option>
+            </select>
             <input type="text" name="publisher" value={publisher} onChange={handlePubChange} placeholder="Publischer" required/>
             <label htmlFor="publisherDate" />
             <input type="date" name="pubDate" value={publishedDate} onChange={handlePubDateChange} placeholder="pubDate" required/>
             <label htmlFor="isbn" />
             <input type="isbn" name="isbn" value={isbn} onChange={handleIsbnChange} placeholder="ISBN" required/>
             <label htmlFor="image" />
-            <input type="file" name="image"  onChange={handleImageChange} accept="image/*" required placeholder="Book Image"/>
+            <input type="file" name="image"  onChange={handleImageChange} accept="image/*"  placeholder="Book Image"/>
             <label htmlFor="description" />
             <textarea name="description" value={description} placeholder="Description" onChange={handleDescriptionChange} required></textarea>
            <button type="submit" className="btn">Create Book</button>

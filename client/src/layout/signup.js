@@ -1,6 +1,6 @@
 
-import axios from "axios";
 import React, { useState } from "react";
+import { signUpUser } from "sevices/user";
 
 
 const SignUp=()=>{
@@ -30,11 +30,12 @@ const handleSubmit=async(event)=>{
         newUser.append('password',password);
         newUser.append('email',email);
 
-        const res=await axios.post('http://localhost:8080/api/user',newUser);
-        console.log(res)
+       
+      const result=  await signUpUser(newUser);
+      console.log(result)
 
     } catch (error) {
-        console.log(error)
+        alert(error)
     }
     setName('');
     setImage('');

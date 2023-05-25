@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { getAllBooks } from "sevices/books";
 import Book from "./Book";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Books=()=>{
@@ -10,18 +12,22 @@ const Books=()=>{
     useEffect(()=>{
        const fetchBooks=async()=>{
         try {
-            const books=await getAllBooks();
+            const bookData=await getAllBooks();
             setStatus(true)
-            setBooks(books)
+            setBooks(bookData.data)
         } catch (error) {
             console.log(error.message)
         }
        }
         fetchBooks()
+       
     },[]);
-   console.log(books)
+   
+        
+    
     return(
         <div className="library">
+            <ToastContainer/>
             {status?<h1>Book Library</h1>:<h1>Loading.....</h1>}
             <div className="library_content">
             {status?(books.map((book)=>{

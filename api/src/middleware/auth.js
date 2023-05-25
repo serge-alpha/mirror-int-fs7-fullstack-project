@@ -4,7 +4,7 @@ const User = require('../model/user')
 const isLogin=(req,res,next)=>{
     try {
         if(!req.headers.cookie){
-            return res.status(404).send({message:'Please login'})
+            return res.status(422).json({message:'Please login'})
         }
        let token=req.headers.cookie.split("=")[1]
        token=token.split(';')[0]
@@ -25,7 +25,7 @@ const isLogin=(req,res,next)=>{
 const isLogOut=(req,res,next)=>{
     try {
         if(req.header.cookie){
-          return res.status(404).json({message:"Please logout"}) 
+          return res.status(422).json({message:"Please logout"}) 
           }  
           next();                    
        

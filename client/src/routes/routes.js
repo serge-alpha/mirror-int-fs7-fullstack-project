@@ -8,6 +8,7 @@ import Nav from "layout/Navbar";
 import SignUp from "layout/signup";
 import Book from "pages/Book";
 import Profile from "pages/Profile";
+import Borrow from "pages/Borrow";
 
 const Index=()=>{
     return(
@@ -15,9 +16,11 @@ const Index=()=>{
             <Nav/>
             <Routes>
                 <Route path="/" element={<Home/>} />
+                <Route path="/logout" element={<Home/>} />
                 <Route path="/signup" element={<SignUp/>} />
                 <Route path="/books" element={<Books/>} />
                 <Route path="/book" element={<Book/>}/>
+                <Route path="/borrowed-book" element={<Borrow/>}/>
                 <Route path="/profile" element={<Profile/>}/>
                 <Route path="/login" element={<Login/>} />
                 <Route path="/create-book" element={<CreateBook/>} />

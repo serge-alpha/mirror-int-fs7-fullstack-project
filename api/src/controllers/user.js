@@ -11,6 +11,7 @@ const { createNextState } = require('@reduxjs/toolkit');
 
 const createUser=async(req,res,next)=>{
     try {
+        console.log(req)
         const { name, email, password } = req.body;
         const image = req.file && req.file.path;
         if(!name){
@@ -40,15 +41,15 @@ const createUser=async(req,res,next)=>{
         if(image){
             token={...token,image:image.path}
         }
-        token= await createToken(token);
-        const emailData={
-            email,
-            subject:"Verify your email",
-            html:`<h1>Click here to verify your email</h1>
-            <p>Click here to <a href="${dev.app.clientUrl}/auth/activte/${token} target="_blank"> activate your account </a> </p>`,
-        }
+         token= await createToken(token);
+        // const emailData={
+        //     email,
+        //     subject:"Verify your email",
+        //     html:`<h1>Click here to verify your email</h1>
+        //     <p>Click here to <a href="${dev.app.clientUrl}/auth/activte/${token} target="_blank"> activate your account </a> </p>`,
+        // }
 
-        await sendMail(emailData);
+        //await sendMail(emailData);
         succesMessage(res,200,'verify your email please',token);
 
     } catch (error) {
@@ -64,7 +65,7 @@ const verifyUser=(req,res,next)=>{
         }
         jwt.verify(token, dev.app.privateKey, async(err, decoded)=> {
             if (err){
-                throw createError(401,'token has expired')
+                throw  createError(400,'token has expired')
             }
                const {name,email,hashPassword,image}=decoded;
               const isExist= await User.findOne({email:email});
@@ -132,7 +133,7 @@ const loginUser=async(req,res)=>{
             message:"Login successful",
             user:{
                 token,
-                name:user.name,
+                data:user,
             }
          })
          //req.headers.cookie=res.

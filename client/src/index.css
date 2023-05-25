@@ -12,9 +12,14 @@ code {
     monospace;
 }
 
-
 .nav{
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
   background-color: #2C3333;
+}
+
+.nav_links{
   display: flex;
   text-align: center;
   justify-content: center;
@@ -23,10 +28,21 @@ code {
   transition: all 0.5s;
 }
 
+.nav_borrow{
+  text-decoration: none;
+  color: #fff;
+  cursor: pointer;
+}
+
+.nav_borrow:hover{
+  text-decoration: underline;
+  color: rgb(90, 212, 90);
+}
+
 .nav_link{
   text-decoration: none;
- color: #fff;
- transition: all 0.3s;
+  color: #fff;
+  transition: all 0.3s;
 }
 
 .nav_link:hover{
