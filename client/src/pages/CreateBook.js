@@ -65,7 +65,7 @@ const handleSubmit=async(event)=>{
             <input type="text" name="title" value={title} onChange={handletitleChange} placeholder="Title" required/>
             <label htmlFor="publisher" />
             <select>
-                <option>hallo1</option>
+                <option >hallo1</option>
             </select>
             <input type="text" name="publisher" value={publisher} onChange={handlePubChange} placeholder="Publischer" required/>
             <label htmlFor="publisherDate" />

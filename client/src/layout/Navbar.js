@@ -9,7 +9,6 @@ const Nav=()=>{
     
     const {data}=useSelector(state=>state.user)
     let is_admin=data.userData.is_admin;
-  console.log(data.is_Login)
     const handleLogout=()=>{
         dispatch(logout())
         Navigate('/')
@@ -25,9 +24,13 @@ const Nav=()=>{
             { data.is_Login ? 
                 <>
                     <NavLink to="/books" className="nav_link">Books</NavLink>
-                    {is_admin?<NavLink to="/create-book" className="nav_link">Create Book</NavLink>:''}
+                    {is_admin?
+                    <>
+                        <NavLink to="/create-book" className="nav_link">Create Book</NavLink>
+                        <NavLink to="/borrowed-book-admin" className="nav_borrow">No of borrowed books</NavLink>
+                    </>:''}
                     <NavLink to="/profile" className="nav_link">Profile</NavLink> 
-                    <NavLink to="/borrowed-book" className="nav_borrow">No of borrowed books</NavLink>
+                    {!is_admin?<NavLink to="/borrowed-book" className="nav_borrow">No of borrowed books</NavLink>:''}
                 </>: ''}
             </div> 
             <div >

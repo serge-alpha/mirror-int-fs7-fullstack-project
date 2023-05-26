@@ -6,6 +6,9 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+*{
+  scroll-behavior: smooth;
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -62,7 +65,9 @@ code {
   border-radius: 5px;
 
 }
-
+.edit_form{
+  height: 85vh;
+}
 form>input,textarea{
   border: none;
   height: 1.5rem;
@@ -97,6 +102,14 @@ form>input,textarea{
   background-color: #2C3333;
   color: #EEEEEE;
 }
+
+.profile_image{
+  margin: auto;
+  width: 20rem;
+  height: 20rem;
+  background-color: #d0d0d0;
+  border-radius: 5px;
+}
 .home{
   color: #1a1e1e;
   display: flex;
@@ -104,8 +117,9 @@ form>input,textarea{
   text-align: center;
   justify-content: center;
   gap: 1rem;
+  padding: 3rem;
   margin: 0;
-  height: 90vh;
+  min-height: 90vh;
 }
 .home>h1{
   font-size: 5rem;
@@ -155,4 +169,22 @@ form>input,textarea{
 .card__body{
   padding:1rem;
   
+}
+
+table {
+  width: 95%;
+  border-collapse: collapse;
+  margin:6rem 1rem;
+  border:1px;
+  box-shadow:1px 2px 6px;
+}
+thead {
+  background-color: #f2f2f2;
+  font-size: 1rem;
+  color: #171717;
+}
+th, td {
+  border-bottom: 1px solid #ddd;
+  padding:1.5rem;
+  text-align:start;
 }
