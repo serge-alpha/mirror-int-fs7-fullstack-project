@@ -42,6 +42,10 @@ const bookSchema=new Schema({
     publishedDate:{
         type:String,
     },
+    borrow:{
+        type:Boolean,
+        default:false
+    },
     image:{
         type:String,
         default:"C:\Users\serge\Desktop\int-fs7-blog-project\server\src\public\blog\image\default.jpeg"
