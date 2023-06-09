@@ -33,14 +33,14 @@ const Profile=()=>{
             User.append('email',email);
             User.append('id',id);
             
-            await UpdateUser(User);
+            await UpdateUser(User,id);
         toast("done!!")
         setEmail(user.userData.email)
         setName(user.userData.name)
             Navigate('')
         } catch (error) {
-            alert()
-            console.log(error)
+            alert(error)
+           
         }
     }
     console.log(user)

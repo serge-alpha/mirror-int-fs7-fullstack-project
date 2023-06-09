@@ -1,6 +1,6 @@
 import React, {useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
-import { getAllUser } from "sevices/user";
+import { deleteUser, getAllUser } from "sevices/user";
 
 const Users=()=>{
     
@@ -13,14 +13,27 @@ const Users=()=>{
             
              setUsers(userData.data)
          } catch (error) {
-             console.log(error.message)
+             alert(error)
          }
         }
          fetchUsers()
         
      },[]);
 
-     console.log(users)
+     const handleAdmin=()=>{
+        
+     }
+     const handleDelete=(user)=>{ 
+        console.log(user.is_admin)
+        if(user.is_admin){
+            alert('Cant delete an admin')
+        }
+        else{
+            deleteUser(user._id)
+        }
+        
+     }
+
    
     return(
         <div>
@@ -31,6 +44,7 @@ const Users=()=>{
                 <th>Name</th>
                 <th>Email</th>
                 <th>Status</th>
+                <th></th>
                 <th></th>
             </tr>
             {users.map((user)=>{
@@ -48,6 +62,12 @@ const Users=()=>{
                         <td>
                             {user.is_admin?'IS ADMIN':'Is NOT ADMIN'}
                         </td>
+                        <td>
+                            <button type="button" className="login_btn" onClick={()=>handleDelete(user)}>Delete</button>
+                        </td>
+                        {/* <td>
+                            <button type="button" className="login_btn" onClick={()=>handleAdmin()}>Set Admin</button>
+                        </td> */}
                         <ToastContainer /> 
                     </tr>   
                 )

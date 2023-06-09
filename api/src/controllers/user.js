@@ -5,13 +5,12 @@ const User = require('../model/user');
 const { createToken } = require('../middleware/storeUserFile');
 const dev = require('../config');
 const jwt=require('jsonwebtoken');
-const sendMail = require('../helper/email');
+const sendEmailWithNodeMailer = require('../helper/email');
 const { createNextState } = require('@reduxjs/toolkit');
 
-
+console.log(sendEmailWithNodeMailer)
 const createUser=async(req,res,next)=>{
     try {
-        console.log(req)
         const { name, email, password } = req.body;
         const image = req.file && req.file.path;
         if(!name){
@@ -42,14 +41,14 @@ const createUser=async(req,res,next)=>{
             token={...token,image:image.path}
         }
          token= await createToken(token);
-        // const emailData={
-        //     email,
-        //     subject:"Verify your email",
-        //     html:`<h1>Click here to verify your email</h1>
-        //     <p>Click here to <a href="${dev.app.clientUrl}/auth/activte/${token} target="_blank"> activate your account </a> </p>`,
-        // }
+        const emailData={
+            email,
+            subject:"Verify your email",
+            html:`<h1>Click here to verify your email</h1>
+            <p>Click here to <a href="${dev.app.clientUrl}/auth/activate/${token}" target="_blank"> activate your account </a> </p>`,
+        }
 
-        //await sendMail(emailData);
+        await sendEmailWithNodeMailer(emailData);
         succesMessage(res,200,'verify your email please',token);
 
     } catch (error) {
@@ -59,13 +58,14 @@ const createUser=async(req,res,next)=>{
 
 const verifyUser=(req,res,next)=>{
     try {
+        console.log(req)
         const {token}=req.body;
         if(!token){
             throw createError(404,"token is missen");
         }
         jwt.verify(token, dev.app.privateKey, async(err, decoded)=> {
             if (err){
-                throw  createError(400,'token has expired')
+                throw  createError(404,'token has expired')
             }
                const {name,email,hashPassword,image}=decoded;
               const isExist= await User.findOne({email:email});
@@ -109,7 +109,7 @@ const loginUser=async(req,res)=>{
             return res.status(400).json({message:"No user with this email"});
         }
         const passWordMatch=await comparePassword(password,user.password);
-        
+        console.log(password)
         if(!passWordMatch){
             return res.status(400).json({message:"Name or password is wrong"})
         }
@@ -117,27 +117,22 @@ const loginUser=async(req,res)=>{
        const token= await jwt.sign({id:user._id}, dev.app.authkey,{expiresIn:"60m"});
        
     // store token in cookie
-    if(req.cookies[`${user._id}`]){
-        req.cookies[`${user._id}`]='';
-    }
-       req.headers.cookie= res.cookie(String(user._id),token,{
-            path:'/',
+    
+        res.cookie('accessToken',token,{
             expires:new Date(Date.now() + 1000 *60*29),
             httpOnly:true,
-            secure:true,
-            sameSite:'none'
+            // secure:true,
+            sameSite:true
         });
        
         res.status(200).json({
            
             message:"Login successful",
             user:{
-                token,
                 data:user,
             }
          })
          //req.headers.cookie=res.
-        console.log(req.headers)
     } catch (error) {
         res.json({error})
        // res.status(500).json({message:"something went wrong"})
@@ -147,17 +142,18 @@ const loginUser=async(req,res)=>{
 const updateUser=async(req,res,next)=>{
    
     try {
+        const id=req.params.id
         const image=req.file && req.file.path;
-        const user= await User.findById(req.id);
+        const user= await User.findById(id);
         if(!user){
             throw createError(400,"user with this Id doesn't exist")
         }
-        const userUpdate=await User.findByIdAndUpdate(req.id,{...req.body},{new:true});
+        const userUpdate=await User.findByIdAndUpdate(id,{...req.body},{new:true});
         if(!userUpdate){
             throw createError(400,'User was not updated');
         }
         if (image){
-            userUpdate=await User.findByIdAndUpdate(req.id,{image:image},{new:true});
+            userUpdate=await User.findByIdAndUpdate(id,{image:image},{new:true});
         }
         await userUpdate.save();
       succesMessage(res,200,'User updated');
@@ -258,7 +254,7 @@ const deleteUser=async(req,res)=>{
         const id=req.params.id;
         const isExist= await User.findById(id);
         if(!isExist){
-            return res.status(400).json({message:"user with this Id doesn't exist"});
+           throw createError(404,"user with this Id doesn't exist");
         }
         const userData=await User.findByIdAndDelete(id);
         console.log(userData)

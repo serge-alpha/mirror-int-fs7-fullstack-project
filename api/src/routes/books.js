@@ -6,11 +6,11 @@ const { createBookValidator, Validation } = require('../middleware/validator');
 
 
 const bookRouter =require('express').Router();
-
+// ,isLogin,isAmin,
 bookRouter.post('/reset',resetBook);
-bookRouter.post('/',isLogin,isAmin,uploadBook.single('image'),createBookValidator,Validation,createBook);
+bookRouter.post('/',uploadBook.single('image'),createBookValidator,Validation,createBook);
 bookRouter.post('/publisher',isLogin,isAmin,uploadBook.single('image'),createPublisher);
-bookRouter.get('/',getAllBooks)//isLogin,isAmin
+bookRouter.get('/',isLogin,getAllBooks)
 bookRouter.delete('/:slug',isLogin,deleteBook)
 bookRouter.get('/:slug',getSingleBook);
 bookRouter.put('/',isLogin,isLogin,isAmin,uploadBook.single('image'),updateBook)

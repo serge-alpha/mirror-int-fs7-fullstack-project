@@ -3,12 +3,13 @@ const dev = require('../config')
 const User = require('../model/user')
 const isLogin=(req,res,next)=>{
     try {
-        if(!req.headers.cookie){
+        const accessToken=req.cookies.accessToken
+        console.log(accessToken)
+        if(!accessToken){
             return res.status(422).json({message:'Please login'})
         }
-       let token=req.headers.cookie.split("=")[1]
-       token=token.split(';')[0]
-        jwt.verify(token,String(dev.app.authkey),
+
+        jwt.verify(accessToken,String(dev.app.authkey),
         async(err,user)=>{
             if(err){
                 return res.status(404).json({message:'Invalid Token'})
@@ -24,7 +25,8 @@ const isLogin=(req,res,next)=>{
 
 const isLogOut=(req,res,next)=>{
     try {
-        if(req.header.cookie){
+        const accessToken=req.cookies.accessToken
+        if(accessToken){
           return res.status(422).json({message:"Please logout"}) 
           }  
           next();                    
@@ -36,15 +38,24 @@ const isLogOut=(req,res,next)=>{
 
 const isAmin= async(req,res,next)=>{
     try {
-        if(!req.headers.cookie){
+        const accessToken=req.cookies.accessToken
+        if(!accessToken){
            return res.status(404).json({message:'Please login'})
         }
-       let id=req.headers.cookie.split("=")[0]
-        let user=await User.findById(id);
-        if(!user.is_admin){
-           return res.status(404).json({message:'Only Admins can move ahead'})
-        }
+        
+        jwt.verify(accessToken,String(dev.app.authkey),
+        async(err,user)=>{
+            if(err){
+                return res.status(404).json({message:'Invalid Token'})
+            }   
+            // await User.findById(id)
+            console.log(user.is_admin)
+             if(!user.is_admin){
+                 return res.status(404).json({message:'Only Admins can move ahead'})
+            }              
+        })
         next()
+        
     } catch (error) {
         next(error)
     }

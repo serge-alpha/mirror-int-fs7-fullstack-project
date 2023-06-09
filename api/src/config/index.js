@@ -7,7 +7,7 @@ const dev={
         authkey:process.env.JWT_AUTH_KEY,
         clientUrl:process.env.CLIENT_URL,
         emailAccont_username:process.env.SMTP_USERNAME,
-        emailAccont_password:process.env.SMTP_AUTH_PASSWORD,
+        emailAccont_password:process.env.SMTP_PASSWORD,
         secret_sess_key:process.env.SECRET_SESSION_KEY,
 
     },

@@ -7,10 +7,10 @@ const { registerUserValidator, Validation } = require('../middleware/validator')
 
 const userRouter =require('express').Router();
 
-// isLogin,isAmin,
+// ,isAmin
 userRouter.post('/', uploadUser.single('image'),registerUserValidator,Validation,createUser)
-userRouter.get('/verify',verifyUser);
-userRouter.put('/update',updateUser);
+userRouter.post('/verify',verifyUser);
+userRouter.put('/update/:id',isLogin,updateUser);
 userRouter.get('/',getAllUsers); 
 userRouter.post('/login',limiter,uploadUser.single('image'),loginUser);
 userRouter.get('/logout',logoutUser);

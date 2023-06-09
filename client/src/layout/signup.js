@@ -8,6 +8,7 @@ const [email,setEmail]=useState('');
 const [name,setName]=useState('');
 const [password,setPassword]=useState('');
 const [image,setImage]=useState('');
+const [state,setState]=useState(false)
 
 const handleEmailChange=(event)=>{
     setEmail(event.target.value)
@@ -29,12 +30,11 @@ const handleSubmit=async(event)=>{
         newUser.append('image',image);
         newUser.append('password',password);
         newUser.append('email',email);
-
-       
-      const result=  await signUpUser(newUser);
-      console.log(result)
-
+  
+      await signUpUser(newUser);
+     setState(true)
     } catch (error) {
+
         alert(error)
     }
     setName('');
@@ -45,7 +45,7 @@ const handleSubmit=async(event)=>{
 
     return(
             <form onSubmit={handleSubmit} className="login_form">
-                <h2>Register</h2>
+                {state?<h3>Please Click the link in your email adress to Verify your email </h3>:<><h2>Register</h2>
                 <label htmlFor="name" />
                 <input type="text" name="name" value={name} onChange={handleNameChange} placeholder="Name" required/>
                 <input type="email" name="email" value={email} onChange={handleEmailChange} placeholder="Email" required/>      
@@ -53,7 +53,7 @@ const handleSubmit=async(event)=>{
                 <input type="password" name="password" value={password} placeholder="Password" onChange={handlePasswordChange} required></input>
                 <label htmlFor="image" />
                 <input type="file" name="image"  onChange={handleImageChange} accept="image/*" required/>
-            <button type="submit" className="login_btn">SignUp</button>
+                <button type="submit" className="login_btn">SignUp</button></>}
             </form>
     )
 }

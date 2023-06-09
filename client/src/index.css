@@ -115,7 +115,7 @@ form>input,textarea{
   border-radius: 5px;
 }
 .profile_row{
-  height: 90vh;
+  min-height: 90vh;
 }
 .home{
   color: #1a1e1e;

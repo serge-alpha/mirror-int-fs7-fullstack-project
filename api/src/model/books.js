@@ -35,9 +35,10 @@ const bookSchema=new Schema({
         trim:true
     },
     publisher:{
-        type: Schema.Types.String,
-        ref:'Publisher',
-        required:true
+        // type: Schema.Types.String,
+        // ref:'Publisher',
+        // required:true
+        type:String
     },
     publishedDate:{
         type:String,

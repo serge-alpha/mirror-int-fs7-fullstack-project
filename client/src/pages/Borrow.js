@@ -17,7 +17,6 @@ const Borrow=(handleState)=>{
      {book?(book.map((book)=>{
          return (
              <div className="card">  
-             {console.log(book)}
          <img src={book.book.image} alt={book.book.title} className="card__img"/>
          <span className="card__body">
            <b>Title: {book.book.title}</b>

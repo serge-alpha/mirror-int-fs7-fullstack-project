@@ -36,8 +36,7 @@ const handleSubmit=async(event)=>{
 
         navigate('/books')
     } catch (error) {
-        alert()
-        console.log(error)
+        toast("Wrong userName or Password")
     }
     setPassword('');
     setEmail('');
